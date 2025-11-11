@@ -65,7 +65,7 @@ async def search(showname,date,season,episode,MFP, MFP_CREDENTIALS,ismovie,clien
     showname = quote(showname)
     data = f's={showname}&action=searchwp_live_search&swpengine=default&swpquery={showname}'
     response = await client.post(ForwardProxy + f'{GO_DOMAIN}/wp-admin/admin-ajax.php', data = data, headers = headers, proxies = proxies)
-    logger.info (f'{data} , {ForwardProxy} , {GO_DOMAIN}' )
+    logger.info (f' {ForwardProxy}' )
 	if response.status_code != 200:
             logger.warning(f"Guardoserie Failed to fetch search results: {response.status_code}")
     soup = BeautifulSoup(response.text,'lxml', parse_only=  SoupStrainer('a', class_='ss-title'))
