@@ -18,6 +18,8 @@ env_vars = load_env()
 random_headers = Headers()
 GO_DOMAIN = config.GO_DOMAIN
 
+print(env_vars)
+
 GO_PROXY = config.GO_PROXY
 proxies = {}
 if GO_PROXY == "1":
@@ -108,6 +110,7 @@ async def search(showname,date,season,episode,MFP, MFP_CREDENTIALS,ismovie,clien
 async def guardoserie(streams,id,client,MFP,MFP_CREDENTIALS):
     try:
         general = await is_movie(id)
+        logger.info(f'id {general}')
         ismovie = general[0]
         clean_id = general[1]
         type = "Guardoserie"
@@ -120,12 +123,19 @@ async def guardoserie(streams,id,client,MFP,MFP_CREDENTIALS):
         if "tmdb" in id:
             showname,date = get_info_tmdb(clean_id,ismovie,type)
         else:
+            logger.info (f' passo di qui {clean_id} {ismovie} {type} {client}')
             showname,date = await get_info_imdb(clean_id,ismovie,type,client)
-        logger.info(f'GO {showname}')
+            logger.info(f'fermo {showname}')
+            
+       # logger.info(f'ID analizzato: {id}')
+	#logger.info(f'is_movie: {ismovie}, clean_id: {clean_id}')
+	#logger.info(f'showname: {showname}, date: {date}')
+        logger.info(f'GOx {showname}')
+        
         streams = await search(showname,date, season,episode,MFP,MFP_CREDENTIALS,ismovie,client,streams)
         return streams
     except Exception as e:
-        logger.warning(f'GO {e}')
+        logger.warning(f'GOS {e}')
         return streams
 
 
@@ -134,7 +144,7 @@ async def guardoserie(streams,id,client,MFP,MFP_CREDENTIALS):
 async def test_guardoserie():
     from curl_cffi.requests import AsyncSession
     async with AsyncSession() as client:
-        results = await guardoserie({'streams': []},"tt10919420:1:1",client,"1",['test','test'])
+        results = await guardoserie({'streams': []},"tt7950716:1:1",client,"1",['test','test'])
         print(results)
 
         
