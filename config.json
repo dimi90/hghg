@@ -49,7 +49,7 @@
           "Guardoserie":{
             "url": "https://guardoserie.wtf",
             "enabled": "1",
-            "GO_ForwardProxy": "0",
+            "GO_ForwardProxy": "1",
             "GO_PROXY": "0"
           },
           "AnimeWorld":{
